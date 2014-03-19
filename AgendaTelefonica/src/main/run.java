@@ -13,7 +13,7 @@ package main;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class run {
+public class Run {
 
 	
 
