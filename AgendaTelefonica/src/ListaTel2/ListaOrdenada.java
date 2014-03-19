@@ -22,6 +22,8 @@ package ListaTel2;
 			return anterior;
 		}
 
+	
+		
 		@Override
 		public void insert(Nodo<T> novo)
 		{
@@ -54,11 +56,13 @@ package ListaTel2;
 			lista.insert(new Nodo<String>("Dennis"), lista.getHead());
 			lista.append(new Nodo<String>("Mauro"));
 			lista.insert(new Nodo<String>("Carlos"));
-			lista.insert(new Nodo<String>("Dennis"));
-			lista.insert(new Nodo<String>("Rafael"));
-			lista.insert(new Nodo<String>("Raphael"));
+			
+			//lista.insert(new Nodo<String>("Rafael"));
+			//lista.insert(new Nodo<String>("Raphael"));
 
 			lista.print();
+			System.out.println("--------");
+			
 		}
 
 	}
