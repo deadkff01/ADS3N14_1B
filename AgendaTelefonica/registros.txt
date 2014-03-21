@@ -1,5 +1,4 @@
 dennis kaffer; 5465
-aladin silva; 5498945
 carol; 894794651
 xande; 54654564
 veruska wonker; 2164654564
@@ -15,7 +14,6 @@ darth vader; 548754595
 anakin skywalker; 65485548
 miss fortune; 54987121
 adobe reader; 56498745
-git bash; 65458987
 fire fox; 54854465
 google chrome; 4548954
 ana julia; 5645454
@@ -27,3 +25,6 @@ edinburdo fribas; 6959835
 Tranamael lord; 5454
 Tyrola uejad; 4548121
 Tryndamere; 55454
+railander; 56465
+bill gates; 98794651
+steve jobs; 8974523

@@ -50,6 +50,8 @@ package Estrutura;
 		}
 
 
+
+/*
 		public static void main(String[] args) {
 			ListaOrdenada<String> lista = new ListaOrdenada<String>();
 
@@ -65,6 +67,6 @@ package Estrutura;
 			System.out.println("--------");
 			
 		}
-
+*/
 	}
 

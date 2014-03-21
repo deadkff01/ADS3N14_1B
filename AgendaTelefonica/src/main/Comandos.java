@@ -1,9 +1,12 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Scanner;
@@ -17,11 +20,13 @@ public class Comandos {
     private BufferedReader br;
     public static Scanner sc;
 
+    public static  ListaOrdenada<String> lista;
 
-    public void showMenu(){
-	System.out.println("Comandos: Adicionar, Mostrar Lista (mostra a lista inteira), Pesquisar Letra, Navegar (avancar , voltar) e Sair.\n");
+    public void showMenu()
+    {
+	System.out.println("Comandos: Adicionar, Mostrar Lista (mostra a lista inteira), "
+		+ "Pesquisar Letra, Navegar (avancar , voltar), Deletar e Sair.\n");
 
-	
     }
     
     public void readAction(String cmd) throws IOException{
@@ -44,7 +49,14 @@ public class Comandos {
 	if(cmd.equals("navegar")){
 	    surfIntoList();
 	}
-	
+	if(cmd.equals("deletar")){
+	    String nome;
+	    System.out.println("Entre com o nome para ser removido:");
+	    nome= sc.nextLine();
+	    removeLineFromFile(nome);
+	    refreshList();
+	    System.out.println("Contato removido!");
+	}
 	
 	if(cmd.equals("sair")){
 	    System.out.println("Programa Encerrado...");
@@ -60,8 +72,7 @@ public class Comandos {
 		
 		 String nome = null;
 		 String telefone;
-		
-		
+				
 		 sc = new Scanner(System.in);
 		
 		 Writer fileWriter = new FileWriter("registros.txt", true);
@@ -94,36 +105,7 @@ public class Comandos {
     
   public void showList() throws IOException{
 	
-      Pessoa ps = new Pessoa();
-	
- 	 ListaOrdenada<String> lista = new ListaOrdenada<String>();
-	
-	 Reader fileReader = new FileReader("registros.txt");
-	 br = new BufferedReader(fileReader);
-	
-      
-      String line = null;
-
-	
-	 while ((line = br.readLine()) != null) {
-		
-	     String[] breakLine = line.split(";");
-	     
-	     //	System.out.println(line);
-		
-			 String nomePessoa = breakLine[0];//nome
-			 String telefonePessoa = breakLine[1];//telefone
-			 
-			 nomePessoa.toLowerCase();
-	 			 
-			 ps.setNome(nomePessoa.toLowerCase());
-			 ps.setTelefone(telefonePessoa);
-			 
-			 lista.insert(new Nodo<String>(ps.getNome().toLowerCase()+" "+ps.getTelefone()));
-		
-			
-	 }
-		System.out.println("----------------");
+      		System.out.println("----------------");
 		lista.print();
       
     }
@@ -133,68 +115,13 @@ public class Comandos {
   
   	public void findByChar(char c) throws IOException{
   	  
-  	  Pessoa ps = new Pessoa();
-  	
-  	 ListaOrdenada<String> lista = new ListaOrdenada<String>();
- 	
- 	 Reader fileReader = new FileReader("registros.txt");
- 	 br = new BufferedReader(fileReader);
- 	
-       
-       String line = null;
-
- 	
- 	 while ((line = br.readLine()) != null) {
- 		
- 	     String[] breakLine = line.split(";");
- 	     
- 
- 			 String nomePessoa = breakLine[0];//nome
- 			 String telefonePessoa = breakLine[1];//telefone
- 			nomePessoa.toLowerCase();
- 			
- 					 
- 			 ps.setNome(nomePessoa.toLowerCase());
- 			 ps.setTelefone(telefonePessoa);
- 			 
- 			 lista.insert(new Nodo<String>(ps.getNome().toLowerCase()+" "+ps.getTelefone()));	
- 			
- 	 }
  		System.out.println("----------------");
  		lista.printUniqueChar(c);
   }
   
   	public void surfIntoList() throws IOException{
 
-  	     Pessoa ps = new Pessoa();
-  		
-  	 	 ListaOrdenada<String> lista = new ListaOrdenada<String>();
-  		
-  		 Reader fileReader = new FileReader("registros.txt");
-  		 br = new BufferedReader(fileReader);
-  		
-  	      
-  	      String line = null;
-
-  		
-  		 while ((line = br.readLine()) != null) {
-  			
-  		     String[] breakLine = line.split(";");
-  		     
-  		     //	System.out.println(line);
-  			
-  				 String nomePessoa = breakLine[0];//nome
-  				 String telefonePessoa = breakLine[1];//telefone
-  				nomePessoa.toLowerCase();
-  	 				 
-  				 ps.setNome(nomePessoa.toLowerCase());
-  				 ps.setTelefone(telefonePessoa);
-  				 
-  				 lista.insert(new Nodo<String>(ps.getNome().toLowerCase()+" "+ps.getTelefone()));
-  			
-  				
-  		 }
-  			
+  	
   		System.out.println("----------------");
 		
   		System.out.println("Digite (W) para VOLTAR e (S) para AVANCAR ou (VOLTAR) para voltar ao menu inicial.\n");
@@ -226,5 +153,83 @@ public class Comandos {
 		}while(true);
   	}
   	
+  	
+  	public void sendQuery() throws IOException{
+  	  Pessoa ps = new Pessoa();
+  	
+  	lista = new ListaOrdenada<String>();
+ 	
+ 	 Reader fileReader = new FileReader("registros.txt");
+ 	 br = new BufferedReader(fileReader);
+ 	
+       
+       String line = null;
+
+ 	
+ 	 while ((line = br.readLine()) != null) {
+ 		
+ 	     String[] breakLine = line.split(";");
+ 	     
+ 	     //	System.out.println(line);
+ 		
+ 			 String nomePessoa = breakLine[0];//nome
+ 			 String telefonePessoa = breakLine[1];//telefone
+ 			 
+ 			 nomePessoa.toLowerCase();
+ 	 			 
+ 			 ps.setNome(nomePessoa.toLowerCase());
+ 			 ps.setTelefone(telefonePessoa);
+ 			 
+ 			 lista.insert(new Nodo<String>(ps.getNome().toLowerCase()+" "+ps.getTelefone()));
+
+ 	 }
+  	    
+  	}
+  	
+  	
+  	  public void removeLineFromFile(String lineToRemove) throws IOException {
+
+
+  	      File inFile = new File("registros.txt");
+  	          
+  	      File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
+  	      
+  	      BufferedReader br = new BufferedReader(new FileReader("registros.txt"));
+  	      PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+  	      
+  	      String line = null;
+
+  	        while ((line = br.readLine()) != null) {
+  	        
+  	        if (!line.trim().startsWith(lineToRemove)) {
+
+  	          pw.println(line);
+  	          pw.flush();
+  	        }
+  	      }
+  	      pw.close();
+  	      br.close();
+  	  }
+  	  
+  	  
+  	  public void refreshList() throws IOException{
+  	    
+  	      
+  		 Reader fileReader = new FileReader("registros.txt.tmp");
+  		 
+  		 BufferedReader br = new BufferedReader(fileReader);
+  		 
+  		 Writer fileWriter = new FileWriter("registros.txt",false);
+  		 
+  		 String line;
+  		
+  		 while ((line = br.readLine()) != null) {
+  			
+  		    	fileWriter.write(line);
+  			fileWriter.append("\n");
+  					
+  	 	 }
+  		 fileWriter.close();
+  	  }
   	
 }
