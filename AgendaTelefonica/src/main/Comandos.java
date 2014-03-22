@@ -192,7 +192,7 @@ public class Comandos {
 
   	      File inFile = new File("registros.txt");
   	          
-  	      File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
+  	      File tempFile = new File(inFile.getAbsolutePath() + ".csv");
   	      
   	      BufferedReader br = new BufferedReader(new FileReader("registros.txt"));
   	      PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
@@ -215,7 +215,7 @@ public class Comandos {
   	  public void refreshList() throws IOException{
   	    
   	      
-  		 Reader fileReader = new FileReader("registros.txt.tmp");
+  		 Reader fileReader = new FileReader("registros.txt.csv");
   		 
   		 BufferedReader br = new BufferedReader(fileReader);
   		 
