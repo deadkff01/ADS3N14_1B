@@ -2,33 +2,38 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import Estrutura.ListaOrdenada;
 import Estrutura.Nodo;
 import Estrutura.Pessoa;
 
-public class Comandos {
 
+public class Comandos {
+    
     private BufferedReader br;
     public static Scanner sc;
 
-    public static  ListaOrdenada<String> lista;
+    public ListaOrdenada<String> lista;
+    
 
     public void showMenu()
     {
 	System.out.println("Comandos: Adicionar, Mostrar Lista (mostra a lista inteira), "
-		+ "Pesquisar Letra, Navegar (avancar , voltar), Deletar e Sair.\n");
+		+ "Pesquisar Letra, Navegar (avancar , voltar), Deletar, Pesquisa Binaria e Sair.\n");
 
     }
     
+   
     public void readAction(String cmd) throws IOException{
 	cmd = cmd.toLowerCase();
 	if(cmd.equals("adicionar")){
@@ -58,6 +63,12 @@ public class Comandos {
 	    System.out.println("Contato removido!");
 	}
 	
+	if(cmd.equals("Pesquisa Binaria")){
+	    String pesquisaNome;
+	    System.out.println("Entre com o nome (nome completo) para pesquisar:");
+	    pesquisaNome= sc.nextLine().toLowerCase();
+	    BinarySearch(pesquisaNome);
+	}
 	if(cmd.equals("sair")){
 	    System.out.println("Programa Encerrado...");
 	    System.exit(0);
@@ -129,9 +140,9 @@ public class Comandos {
 		    
 		    try{
 			System.out.println("Digite o comando:");
-		    String s = sc.nextLine();
+		    String s = sc.nextLine().toLowerCase();
 		
-		    s.toLowerCase();
+		   // s.toLowerCase();
 		    
 		    if(s.equals("s")){
 		   lista.upDown++;
@@ -157,7 +168,7 @@ public class Comandos {
   	public void sendQuery() throws IOException{
   	  Pessoa ps = new Pessoa();
   	
-  	lista = new ListaOrdenada<String>();
+  	 lista = new ListaOrdenada<String>();
  	
  	 Reader fileReader = new FileReader("registros.txt");
  	 br = new BufferedReader(fileReader);
@@ -175,16 +186,19 @@ public class Comandos {
  			 String nomePessoa = breakLine[0];//nome
  			 String telefonePessoa = breakLine[1];//telefone
  			 
- 			 nomePessoa.toLowerCase();
+ 			// nomePessoa.toLowerCase();
  	 			 
  			 ps.setNome(nomePessoa.toLowerCase());
  			 ps.setTelefone(telefonePessoa);
  			 
- 			 lista.insert(new Nodo<String>(ps.getNome().toLowerCase()+" "+ps.getTelefone()));
+ 			 lista.insert(new Nodo<String>(ps.getNome().toLowerCase()+" - "+ps.getTelefone()));
 
  	 }
   	    
   	}
+  	
+  	
+  	
   	
   	
   	  public void removeLineFromFile(String lineToRemove) throws IOException {
@@ -230,6 +244,82 @@ public class Comandos {
   					
   	 	 }
   		 fileWriter.close();
+  		 br.close();
   	  }
+  	  
+  	  /**Implementação do 2 trabalho...
+  	   *
+  	   * Binary Search..
+  	  @author Dennis Kaffer
+          @version 1.0
+  	   * */
+  	  
+
+    	public void BinarySearch(String nome){
+    	   //lista.getHead();
+    	    Nodo <?> nodo = lista.getHead();
+    	   // Nodo<?> anterior = null;
+    	    List<String> novaLista = new ArrayList<>();
+    	  
+    	   String find = null;
+    	  	
+    	  while(nodo != null){
+    	      
+    	    String temp1 = nodo.getData().toString();
+    	    novaLista.add(temp1);
+    	    nodo = nodo.getNext();
+    	  }
+    	  
+    	int metade = novaLista.size()/2;
+    	int comparacoes = 0;
+    	   	
+    	//String umaString = novaLista.get(metade).split("-");
+    	if((novaLista.get(metade).split(" - ")[0]).compareTo(nome) == 0)
+    	{
+    	    comparacoes++;
+    	  find = novaLista.get(metade);
+    	 
+    	}
+    	else if ((novaLista.get(metade).split(" - ")[0]).compareTo(nome) > 0 )
+    	
+    	{    
+    	    for(int i = metade; i >=0; i--){
+    		comparacoes++;
+    		if((novaLista.get(i).split(" - ")[0]).compareTo(nome) == 0 )
+    		{    
+    		  find = novaLista.get(i);
+    		  break;
+    		}
+    		
+    	    }
+    	  
+    	}
+    	else{
+    	    for(int i = metade; i < novaLista.size(); i++){
+    		comparacoes++;
+    		if((novaLista.get(i).split(" - ")[0]).compareTo(nome) == 0)
+    		{
+    		  find = novaLista.get(i);
+    		  break;
+    		}
+    	
+    	    }
+    	}
+    	if(find != null){
+    	    System.out.println(find+" Numero de comparacoes feitas: "+comparacoes);
+    	}else{
+    	  System.out.println("Nenhum registro encontrado...");
+    	}
+    	
+    	
+    	//System.out.println(temp1);
+    	// for(String x : novaLista){
+    	//      System.out.println(x.split(" - ")[0]);
+    	// }
+    	
+    	}
   	
+    	
+
+    	
 }

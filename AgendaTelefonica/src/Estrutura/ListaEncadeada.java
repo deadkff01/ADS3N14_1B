@@ -25,7 +25,8 @@ public class ListaEncadeada<T extends Comparable<T>> {
 		do {
 		    String temp1 = nodo.getData().toString();
 		
-		    out.println(temp1);
+		    	out.println(temp1);
+		    	
 			nodo = nodo.getNext();
 		
 		} while (nodo != null);
