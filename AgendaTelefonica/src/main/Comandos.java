@@ -63,7 +63,7 @@ public class Comandos {
 	    System.out.println("Contato removido!");
 	}
 	
-	if(cmd.equals("Pesquisa Binaria")){
+	if(cmd.equals("pesquisa binaria")){
 	    String pesquisaNome;
 	    System.out.println("Entre com o nome (nome completo) para pesquisar:");
 	    pesquisaNome= sc.nextLine().toLowerCase();
