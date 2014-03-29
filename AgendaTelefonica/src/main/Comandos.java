@@ -25,55 +25,107 @@ public class Comandos {
 
     public ListaOrdenada<String> lista;
     
-
+    public static final int ADICIONAR = 1;
+    public static final int MOSTRAR_LISTA = 2;
+    public static final int PESQUISAR = 3;
+    public static final int NAVEGAR = 4;
+    public static final int DELETAR = 5;
+    public static final int PESQUISA_BINARIA = 6;
+    public static final int SAIR = 7;
+	
+	
     public void showMenu()
     {
 	System.out.println("Comandos: Adicionar, Mostrar Lista (mostra a lista inteira), "
 		+ "Pesquisar Letra, Navegar (avancar , voltar), Deletar, Pesquisa Binaria e Sair.\n");
-
     }
     
-   
     public void readAction(String cmd) throws IOException{
 	cmd = cmd.toLowerCase();
-	if(cmd.equals("adicionar")){
-	    add();
-	}
 	
-	if(cmd.equals("mostrar lista")){
-	    showList();
-	}
-	if(cmd.equals("pesquisar letra")){
-	    String letraPesquisa;
-	    System.out.println("Entre com o caractere:");
-	    letraPesquisa= sc.nextLine();
-	  char letra = letraPesquisa.charAt(0);
-	    findByChar(letra);
-	}
+	switch(translateCommand(cmd)){
 	
-	if(cmd.equals("navegar")){
-	    surfIntoList();
+	case ADICIONAR:
+	    	
+	    	add();
+	    
+	    	break;
+	case MOSTRAR_LISTA: 
+	    	
+	    	showList();
+	    
+	    break;
+	case PESQUISAR:
+	    	
+	    	String letraPesquisa;
+	    	System.out.println("Entre com o caractere:");
+	    	letraPesquisa= sc.nextLine();
+	    	char letra = letraPesquisa.charAt(0);
+	    	findByChar(letra);
+	   
+	    	break;
+	case NAVEGAR:
+	    
+	    	surfIntoList();
+	    
+	    break;
+	case DELETAR:  
+	    
+	    	String nome;
+	    	System.out.println("Entre com o nome para ser removido:");
+	    	nome= sc.nextLine();
+	    	removeLineFromFile(nome);
+	    	refreshList();
+	    	System.out.println("Contato removido!");
+	    
+	    	break;
+	case PESQUISA_BINARIA:
+	    	
+	    	String pesquisaNome;
+	    	System.out.println("Entre com o nome (nome completo) para pesquisar:");
+	    	pesquisaNome= sc.nextLine().toLowerCase();
+	    	BinarySearch(pesquisaNome);
+	    
+	    	break;
+	case SAIR:
+	    	
+	    	System.out.println("Programa Encerrado...");
+	    	System.exit(0);
+	    
+	    	break;
 	}
-	if(cmd.equals("deletar")){
-	    String nome;
-	    System.out.println("Entre com o nome para ser removido:");
-	    nome= sc.nextLine();
-	    removeLineFromFile(nome);
-	    refreshList();
-	    System.out.println("Contato removido!");
-	}
-	
-	if(cmd.equals("pesquisa binaria")){
-	    String pesquisaNome;
-	    System.out.println("Entre com o nome (nome completo) para pesquisar:");
-	    pesquisaNome= sc.nextLine().toLowerCase();
-	    BinarySearch(pesquisaNome);
-	}
-	if(cmd.equals("sair")){
-	    System.out.println("Programa Encerrado...");
-	    System.exit(0);
-	}
+
      }
+
+    
+    public int translateCommand(String cmd){
+	
+	if(cmd.equals("adicionar")){
+	    return  ADICIONAR;
+	}
+	 if(cmd.equals("mostrar lista")){
+	    return  MOSTRAR_LISTA;
+	    
+	}
+	 if(cmd.equals("pesquisar letra")){
+	    return  PESQUISAR; 
+	}
+	 if(cmd.equals("navegar")){
+	    return   NAVEGAR;
+		
+	}
+	 if(cmd.equals("deletar")){
+	    return  DELETAR;  
+	}
+	 if(cmd.equals("pesquisa binaria")){
+	    return   PESQUISA_BINARIA;  
+	}
+	 if(cmd.equals("sair")){
+	    return  SAIR;
+	}
+	
+	return 0;
+    }
     
     public void add() throws IOException{
 	
@@ -111,14 +163,14 @@ public class Comandos {
 	}
 	
 	fileWriter.close();
-	
+	 System.out.println();
     }
     
   public void showList() throws IOException{
 	
       		System.out.println("----------------");
 		lista.print();
-      
+		System.out.println();
     }
    
   
@@ -128,6 +180,7 @@ public class Comandos {
   	  
  		System.out.println("----------------");
  		lista.printUniqueChar(c);
+ 		System.out.println();
   }
   
   	public void surfIntoList() throws IOException{
@@ -307,8 +360,10 @@ public class Comandos {
     	}
     	if(find != null){
     	    System.out.println(find+" Numero de comparacoes feitas: "+comparacoes);
+    	System.out.println();
     	}else{
     	  System.out.println("Nenhum registro encontrado...");
+    	System.out.println();
     	}
     	
     	
