@@ -12,6 +12,23 @@ public class AppMain {
     public static void main(String[] args) {
 	
 	
+	   Ship[] ships = new Ship[] {
+	            new Ship(1),new Ship(1),new Ship(1),new Ship(1),
+	            new Ship(1),new Ship(1),
+	            
+	            new Ship(2),new Ship(2),new Ship(2),
+	         
+	            new Ship(3),new Ship(3),
+	            
+	            new Ship(4),new Ship(4),
+	            
+	            new Ship(5)
+	    };
+	    BattleshipBoard battleshipBoard = new BattleshipBoard(10, 10);
+	    battleshipBoard.place(ships);
+	    battleshipBoard.printBoard();
+	
+	
 	//matrix [1][1] = "2";
 	//matrix [0][0] = "3";
 	
@@ -21,10 +38,10 @@ public class AppMain {
 	
 	
 
-	populateMatrix();
+	//populateMatrix();
 	//insertRandom(matrix,"3");
 	//insertRandom(matrix,"4");
-	display(matrix);
+	//display(matrix);
 	
 	
 	/*
@@ -45,7 +62,7 @@ public class AppMain {
 	
 
 	
-    }
+    }/*
     public static void display(String x[][]){
 	
 	int coluna = 0;
@@ -156,7 +173,7 @@ public class AppMain {
       }
       */
     
-
+/*
     public static String[][] insert(String a){
 	
 	String matrix2 [][]  = new String [LINHA][2];; 
@@ -175,7 +192,7 @@ public class AppMain {
     }
     
    
-  
+  */
 
 
    
