@@ -24,14 +24,17 @@ public class BattleshipBoard {
             }
         });
 
-        for (int j = 0; j < rows; j++)
-            for (int k = 0; k < cols; k++)
-                board[j][k] = '.'; 
+        for (int j = 0; j < rows; j++){
 
+            for (int k = 0; k < cols; k++){
+                board[j][k] = '.'; 
+            }
+        }
         char[][] checked = new char[rows][cols];
         Random random = new Random();
         for (int i = ships.length - 1; i >=0; i--) {
             for (int j = 0; j < rows; j++)
+        	
                 for (int k = 0; k < cols; k++)
                     checked[j][k] = 'U'; 
             boolean placed = false;
@@ -53,6 +56,23 @@ public class BattleshipBoard {
         }
     }
 
+    
+    public void attack(){
+	int row = 2;
+	int col =  2;
+	
+	 for (int j = 0; j < rows; j++)
+	            for (int k = 0; k < cols; k++)
+	     
+	        	 
+	 	
+	 if(board[row][col] == 'S'){
+	     board[row][col] = 'O';
+	 }
+	 
+	
+    }
+    
     private void place(Ship ship, int row, int col, int direction) {
         int size = ship.getSize();
         switch (direction) {
@@ -118,8 +138,15 @@ public class BattleshipBoard {
     }
 
     public void printBoard() {
-        for (int i = 0; i < rows; i++)
+	System.out.print("   ");
+	for(int i = 0; i < cols; i++){
+	    System.out.print(i+"  ");
+	    
+	}System.out.println(" ");
+        for (int i = 0; i < rows; i++){
+            System.out.print((char)(65 + i) + " ");
             System.out.println(Arrays.toString(board[i]));
-    }
+        }
+        }
 
 }

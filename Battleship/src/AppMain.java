@@ -26,9 +26,10 @@ public class AppMain {
 	    };
 	    BattleshipBoard battleshipBoard = new BattleshipBoard(10, 10);
 	    battleshipBoard.place(ships);
+	    battleshipBoard.attack();
+		
 	    battleshipBoard.printBoard();
-	
-	
+	   
 	//matrix [1][1] = "2";
 	//matrix [0][0] = "3";
 	
