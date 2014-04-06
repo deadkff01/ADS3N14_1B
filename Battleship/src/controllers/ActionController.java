@@ -119,7 +119,7 @@ public class ActionController {
 
     
     /**
- 	 * Metodo que veridfica se o usu�rio inseriu as coordenadas corretamente.. 
+ 	 * Metodo que verifica se o usuario inseriu as coordenadas corretamente.. 
  	 */
  	public void checkCoordenadaFormat(String[] parts) {
  		if (parts.length != 2) {
@@ -130,7 +130,7 @@ public class ActionController {
     
     
 	/**
-	 * Imprime o infrmacoes sobre navio afundado...
+	 * Imprime o informacoes sobre navio afundado...
 	 */
 	private void printNavioAfundadoMessage(int linha, int coluna, int navioAfundado,
 		Matrix grid) {

@@ -67,7 +67,7 @@ public class Matrix {
 
 	/**
 	 * Aleatoriamente coloca tada a frota de navios de forma que todos os navios caibam 
-	 * E navios não vão ser posicionados lado a lado..
+	 * E os navios não vão ser posicionados lado a lado..
 	 */
 	public void inserirTodosNaviosRandomicamente() {
 		for (Navio navio : listaNavios) {
@@ -87,7 +87,7 @@ public class Matrix {
 
 	/**
 	 *Determina se um tiro conta como um acerto. Se a coordenada esta ocupada
-	 *E verifica se o navio nao esta afundado. 
+	 *e verifica se o navio nao esta afundado. 
 	 *
 	 *Eeste metodo adicona a Acertos e a afundado quando 
 	 *ha sucesso na verificacao...
@@ -143,7 +143,8 @@ public class Matrix {
 
 	
 	/**
-	 * Determina se o jogo acaba, quando o player afunda todos os navios
+	 * Determina se o jogo acaba, quando o player afunda todos os navios ou se seus pontos
+	 * forem iguais a zero
 	 */
 	public boolean isGameOver() {
 		return getNaviosAfundados() == 13 || player.points == 0;

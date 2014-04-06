@@ -123,7 +123,7 @@ public abstract class Navio {
 	/**
 	 * 
 	 * A utilizacao das determinadas nextLinha e nextColuna.
-	 * Este metode e usado para avaliar a colocao aleatoria de um navio ou recuperar suas coordenadas
+	 * Este metodo e usado para avaliar a colocao aleatoria de um navio ou recuperar suas coordenadas
 	 * 
 	 */
 	int[][] geradorNavioCoordenadas(int linha, int coluna, boolean horizontal) {
@@ -141,8 +141,8 @@ public abstract class Navio {
 	}
 
 	/**
-	 *  Verifica se o navio foi coloca em determinada posicao e se nao 
-	 *  teriam navios adjacentes..
+	 *  Verifica se o navio foi colocado em determinada posicao e se nao 
+	 *  ha navios adjacentes..
 	 *  
 	 */
 	boolean checkIfHaveNaviosAdjacentes(int[][] navioCoordenadas, Matrix grid) {
@@ -187,8 +187,8 @@ public abstract class Navio {
 
 	/**
 	 * 
-	 * Verifica se o tiro nas coordenadas especificas atingio o navio.
-	 * Onavio deve estar localizado e nao pode estar afundado.
+	 * Verifica se o tiro nas coordenadas especificas atingiu o navio.
+	 * O navio sera localizado e nao pode estar afundado.
 	 * Este metodo proporciona o boolean para o metodo Navio.atirarLocal
 	 * 
 	 */
@@ -209,7 +209,7 @@ public abstract class Navio {
 
 	/**
 	 * Retorna a localizacao do navio..
-	 * Esete metodo fornece o indice para o metodo Navio.AtirarLocal
+	 * Este metodo fornece o indice para o metodo Navio.AtirarLocal
 	 * 
 	 */
 	public int getNavioLocalIndex(int linha, int coluna) {
@@ -226,7 +226,7 @@ public abstract class Navio {
 
 	/**
 	 *  boolean que testa se o navio foi atingido, e atualiza o Navio.maxAcertos [] 
-	 * array accordingly
+	 *
 	 */
 	public boolean atirarLocal(int linha, int coluna) {
 	 
