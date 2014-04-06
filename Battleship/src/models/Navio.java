@@ -142,10 +142,10 @@ public abstract class Navio {
 	 *  teriam navios adjacentes..
 	 *  
 	 */
-	boolean checkIfHaveNaviosAdjacentes(int[][] navioCoordenadas, Matrix ocean) {
+	boolean checkIfHaveNaviosAdjacentes(int[][] navioCoordenadas, Matrix grid) {
 		int validSpots = 0;
 		for (int i = 0; i < navioCoordenadas.length; i++) {
-			if (ocean.localValidoToNavio[navioCoordenadas[i][0]][navioCoordenadas[i][1]]) {
+			if (grid.localValidoToNavio[navioCoordenadas[i][0]][navioCoordenadas[i][1]]) {
 				validSpots++;
 			}
 		}
