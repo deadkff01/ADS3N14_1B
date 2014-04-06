@@ -7,6 +7,7 @@ import views.MenuView;
 
 
 
+
 public class ActionController {
 
     	private Scanner scanner;
@@ -48,8 +49,6 @@ public class ActionController {
 			
 			int column = ((int)(num-65)); 
 			
-			//checkCoordinateRange(parts);
-			
 			
 			linhaTiro = Integer.parseInt(parts[0]);
 			colunaTiro = column;
@@ -60,7 +59,6 @@ public class ActionController {
 			
 			printNavioAfundadoMessage(linhaTiro, colunaTiro, navioAfundado, grid);
 			
-			////
 			view1.menuSubStatus(grid.getTirosDados(), grid.getAcertosCount(),grid.getNaviosAfundados() );
 			
 			grid.print();
@@ -116,7 +114,7 @@ public class ActionController {
 
     
     /**
- 	 * Metodo que veridfica se o usuário inseriu as coordenadas corretamente.. 
+ 	 * Metodo que veridfica se o usuï¿½rio inseriu as coordenadas corretamente.. 
  	 */
  	public void checkCoordenadaFormat(String[] parts) {
  		if (parts.length != 2) {
