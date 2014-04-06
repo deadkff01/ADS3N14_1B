@@ -1,4 +1,7 @@
-
+/**
+ * @author Dennis Kaffer
+ * 
+ * */
 package models;
 
 public class Torpedeiro extends Navio {

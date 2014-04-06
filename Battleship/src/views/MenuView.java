@@ -1,3 +1,8 @@
+/**
+ * @author Dennis Kaffer
+ * 
+ * */
+
 package views;
 
 import models.Player;

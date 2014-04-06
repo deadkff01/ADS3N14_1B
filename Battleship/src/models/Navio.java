@@ -1,4 +1,7 @@
-
+/**
+ * @author Dennis Kaffer
+ * 
+ * */
 
 package models;
 import java.util.Random;

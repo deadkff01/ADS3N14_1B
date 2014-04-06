@@ -1,3 +1,7 @@
+/**
+ * @author Dennis Kaffer
+ * 
+ * */
 
 package models;
 

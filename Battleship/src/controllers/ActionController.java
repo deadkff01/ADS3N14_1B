@@ -1,11 +1,16 @@
+
+/**
+ * @author Dennis Kaffer
+ * 
+ * */
+
+
 package controllers;
 
 import java.util.Scanner;
 
 import controllers.Matrix;
 import views.MenuView;
-
-
 
 
 public class ActionController {

@@ -1,3 +1,8 @@
+/**
+ * @author Dennis Kaffer
+ * 
+ * */
+
 package models;
 
 public class Player {
