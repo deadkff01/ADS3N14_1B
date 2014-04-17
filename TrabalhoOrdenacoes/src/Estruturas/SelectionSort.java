@@ -2,31 +2,61 @@ package Estruturas;
 
 public class SelectionSort {
 
-	int counter;
+	int comparisonscounter;
+	int swapCounter = 0;
+
+	private int[] data;
+	private int length;
+
+
+	public SelectionSort(int[] data) {
 	
-	   public void selectionSort(int[] numbers) {
+		this.data = data;
+		length = data.length;
+	}
+	 
+
+	   public void selectionSort() {
 			int outer, inner, min;
-			for (outer = 0; outer < numbers.length - 1; outer++) {
+		
+			for (outer = 0; outer <= length -1; outer++) {
 				min = outer;
-				for (inner = outer + 1; inner < numbers.length; inner++) {
-					if (numbers[inner] < numbers[min]) {
+				
+				for (inner = outer + 1; inner < length; inner++) {
+					
+					if (data[inner] < data[min]) {
+
 						min = inner;
-						counter++;
+						swapCounter++;
+					
 					}
+		
+					comparisonscounter++;
 				}
 				
-				counter++;
-				int temp = numbers[outer];
-				numbers[outer] = numbers[min];
-				numbers[min] = temp;
-			System.out.print(numbers[outer]+" ");
+				int temp = data[outer];
+				data[outer] = data[min];
+				data[min] = temp;
+				
 			}
+			
+			
 		}
 	
-	
+	   public void print() {
+			for (int i = 0; i < length; i++) {
+				System.out.print(data[i] + " ");
+			}
+			System.out.println();
+		}
 	   
-	   public int getCounter(){
+	   public int getComparisonsCounter(){
 		   
-		   return counter;
+		   return comparisonscounter;
+	   }
+	   
+   public int getSwapCounter(){
+		   
+		   return swapCounter;
 	   }
 }
