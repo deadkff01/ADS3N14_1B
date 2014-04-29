@@ -88,7 +88,7 @@ public class BST<T extends Comparable<T>>{
 		if (!isEmpty()) {
 			try {
 				root = recRemove(data, this.root);
-			} catch (Exception e) {
+			} catch (DataNotFoundException  e) {
 				// TODO Auto-generated catch block
 
 			}

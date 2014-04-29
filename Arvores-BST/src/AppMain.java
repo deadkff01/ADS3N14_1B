@@ -35,8 +35,8 @@ public class AppMain {
 			if(entrada.equalsIgnoreCase("pesquisar largura")){
 				pesquisarLar();
 			}
-			if(entrada.equalsIgnoreCase("pesquisar largura")){
-				pesquisarLar();
+			if(entrada.equalsIgnoreCase("deletar")){
+				deletar();
 			}
 			
 		}
@@ -73,17 +73,16 @@ public class AppMain {
 	   String selectMode;
 	   
 	   System.out.println("Digite (mostrar infixa, mostrar prefixa ou mostrar posfixa): \n");
-	   Scanner scc = new Scanner(System.in);
-	   
-	   selectMode = scc.nextLine();
+	 
+	   selectMode = sc.nextLine();
 	   
 	   if(selectMode.equals("mostrar infixa")){
 		   System.out.println(arvoreBinaria.infixa());
 	   }
-	   if(selectMode.equalsIgnoreCase("mostrar prefixa")){
+	   else if(selectMode.equalsIgnoreCase("mostrar prefixa")){
 		   System.out.println(arvoreBinaria.prefixa());
 	   }
-	   if(selectMode.equalsIgnoreCase("mostrar posfixa")){
+	   else if(selectMode.equalsIgnoreCase("mostrar posfixa")){
 		   System.out.println(arvoreBinaria.posfixa());
 	   }else{
 		   System.out.println("opçao inexistente");
@@ -97,7 +96,7 @@ public class AppMain {
      	String nome;
      	nome = sc.nextLine();
   		
-     if(arvoreBinaria.containsDFS(nome).equals(null))
+     if(arvoreBinaria.containsDFS(nome) == null)
   		System.out.println("Contato inexistente ou nome invalido..");
      else
     	 System.out.println(arvoreBinaria.containsDFS(nome));
@@ -110,13 +109,35 @@ public class AppMain {
  		String nome;
  	  nome = sc.nextLine();
  	  
-      if(arvoreBinaria.containsDFS(nome).equals(null))
+      if(arvoreBinaria.containsDFS(nome) == null)
     		System.out.println("Contato inexistente ou nome invalido..");
       else
  		System.out.println(arvoreBinaria.containsBSF(nome));
       System.out.println("Comparacoes feitas: "+arvoreBinaria.getComparisonsBFS());
     }
      
+    
+    static void deletar(){
+    	System.out.println("Digite o nome do contato para ser deletado:");
+    	String nome = null;
+    	nome = sc.nextLine();
+    	
+    	try {
+			if(arvoreBinaria.remove(nome)){
+				
+				System.out.println("Contato removido com sucesso..");
+			}
+			else{
+				System.out.println("Contato inexistente ou nome invalido..");
+			}
+			
+		} catch (EmptyBSTException e) {
+			// TODO Auto-generated catch block
+		
+			e.printStackTrace();
+		}
+    	
+    }
     
      static void readFile(String filename) throws IOException {
 		
