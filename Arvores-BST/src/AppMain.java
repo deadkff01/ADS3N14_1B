@@ -1,7 +1,19 @@
+/**Trabalho da arvore binaria..
+ * 
+ * @author Dennis Kaffer
+
+ * @version 1.0
+
+ */
+
+
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
 import java.util.Scanner;
 
 
@@ -15,12 +27,15 @@ public class AppMain {
 		
 	
 		readFile("registros.csv");
-
+	
 		while(true){
-					
+		
+			//System.out.println(arvoreBinaria.getElements());	
+			
 			showMenu();
 			String entrada;
 			entrada = sc.nextLine();
+			
 			
 			
 			if(entrada.equalsIgnoreCase("adicionar")){
@@ -38,15 +53,18 @@ public class AppMain {
 			if(entrada.equalsIgnoreCase("deletar")){
 				deletar();
 			}
-			
+			if(entrada.equalsIgnoreCase("sair")){
+				System.exit(0);
+				System.out.println("Programa Encerrado...");
+			}
 		}
 
 	}
 	
  static void showMenu(){
 		
-		System.out.println("Comandos: Adicionar, Mostrar Lista (Ex: mostrar infixa, mostrar prefixa, mostrar posfixa), "
-				+ "\npesquisar altura, pesquisar largura, Deletar e sair");
+		System.out.println("Comandos: Adicionar, Mostrar Lista, "
+				+ "\npesquisar altura, pesquisar largura, Deletar e sair.");
 		
 	}
 	
@@ -67,6 +85,15 @@ public class AppMain {
 	
 	System.out.println("Quntidade de elementos: "+arvoreBinaria.getSize());
 	System.out.println("Altura da arvore: "+arvoreBinaria.getTreeHeight());
+	System.out.println();
+	
+	try {
+		sendToFile("registros.csv");
+		System.out.println("Alteracoes salvas!");
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 	
      static void mostrarLista(){
@@ -93,27 +120,31 @@ public class AppMain {
     
     static void pesquisarAlt(){
   	   System.out.println("Digite o nome para pesquisar por ALTURA: \n");
-     	String nome;
+     	String nome = null;
      	nome = sc.nextLine();
+
+     	  System.out.println((arvoreBinaria.containsDFS(nome) == null) ? "Contato inexistente" 
+    			   : "Contato encontrado > "+arvoreBinaria.containsDFS(nome)
+    			    +"\nComparacoes feitas: "+arvoreBinaria.getComparisonsDFS()
+    			   );
   		
-     if(arvoreBinaria.containsDFS(nome) == null)
-  		System.out.println("Contato inexistente ou nome invalido..");
-     else
-    	 System.out.println(arvoreBinaria.containsDFS(nome));
-     System.out.println("Comparacoes feitas: "+arvoreBinaria.getComparisonsDFS());
+  
+   System.out.println("----------");
      }
      
      
     static void pesquisarLar(){
  	   System.out.println("Digite o nome para pesquisar por LARGURA: \n");
- 		String nome;
+ 		String nome = null;
  	  nome = sc.nextLine();
  	  
-      if(arvoreBinaria.containsDFS(nome) == null)
-    		System.out.println("Contato inexistente ou nome invalido..");
-      else
- 		System.out.println(arvoreBinaria.containsBSF(nome));
-      System.out.println("Comparacoes feitas: "+arvoreBinaria.getComparisonsBFS());
+
+ 	   System.out.println((arvoreBinaria.containsBFS(nome) == null) ? "Contato inexistente" 
+ 			   : "Contato encontrado > "+arvoreBinaria.containsBFS(nome)
+ 			    +"\nComparacoes feitas: "+arvoreBinaria.getComparisonsBFS()
+ 			   );
+ 		
+ 	   System.out.println("----------");
     }
      
     
@@ -123,21 +154,41 @@ public class AppMain {
     	nome = sc.nextLine();
     	
     	try {
-			if(arvoreBinaria.remove(nome)){
-				
-				System.out.println("Contato removido com sucesso..");
-			}
-			else{
-				System.out.println("Contato inexistente ou nome invalido..");
-			}
-			
+    		
+    	 	   System.out.println((arvoreBinaria.remove(nome)) ? "Contato removido com sucesso!"  : "Contato inexistente ou nome invalido..");
+    	 		
 		} catch (EmptyBSTException e) {
 			// TODO Auto-generated catch block
 		
 			e.printStackTrace();
 		}
     	
+    	
+    	try {
+			sendToFile("registros.csv");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+		System.out.println("Alteracoes salvas!");
+    	
+    	 System.out.println("----------");
     }
+    
+    static void sendToFile(String filename) throws IOException{
+    	
+   	 Reader fileReader = new FileReader(filename);
+	 br = new BufferedReader(fileReader);
+	 Writer fileWriter = new FileWriter(filename,false);
+	 
+	 fileWriter.write(arvoreBinaria.getElements());
+	 
+	 fileReader.close();
+	 fileWriter.close();
+		 br.close();
+    }
+    
     
      static void readFile(String filename) throws IOException {
 		
@@ -162,6 +213,9 @@ public class AppMain {
 			arvoreBinaria.add(new Node<Pessoa>(ps));
 			ps = new Pessoa();
 		}	
+		
+		fileReader.close();
+		 br.close();
 		
 	}
     

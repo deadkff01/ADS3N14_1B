@@ -1,3 +1,11 @@
+/**Trabalho da arvore binaria..
+ * 
+ * @author Dennis Kaffer
+
+ * @version 1.0
+
+ */
+
 
 public class Pessoa implements Comparable<Pessoa>{
 	

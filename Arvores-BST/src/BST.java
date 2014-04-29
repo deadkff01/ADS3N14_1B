@@ -1,7 +1,13 @@
+/**Trabalho da arvore binaria..
+ * 
+ * @author Dennis Kaffer
 
+ * @version 1.0
+
+ */
 import java.util.*;
 
-public class BST<T extends Comparable<T>>{
+public class BST<T extends Comparable<T>>  implements BSTInterface<T>{
 	
 	private Node<T> root;
 	
@@ -14,33 +20,45 @@ public class BST<T extends Comparable<T>>{
 	private int treeHeight = 0;
 	
 	private boolean found = false;
+	
+	public ArrayList<String> insertionOrder = new ArrayList<>();
 
+	public String elements = null;
+	
 	public BST(){
 		root = null;
 		length = 0;
+		
 	}
 	
-	public void add(Node<T> data){
 	
+
+	@Override
+	public void add(Node<T> data){
+		
 		root = recAdd(data.getData(), this.root);
 		length +=1;
-		
+	
 		treeHeight = treeHeight(this.root);
-		
+
 	}
-	
+
+
 	public Node<T> recAdd(T data, Node<T> tree){
-	
+		
+		Pessoa addp = (Pessoa)data;
+		
 		if(tree == null){
-			tree = new Node<T>(data);
+			
 			// System.out.println("  Inserted " + data + " to head " + tree.getData());
+
+			tree = new Node<T>(data);
+			
+			insertionOrder.add(addp.getNome()+";"+addp.getTelefone());
+			
 			return tree;
 		}
-		
-		//Pessoa addp = (Pessoa)data;
-		//Pessoa currentPessoa = (Pessoa)tree.getData();
-			
-		//System.out.println(" aa"+addp.getNome()+  "  "+currentPessoa.getNome()) ;
+	
 		 
 		if(data.compareTo(tree.getData()) <= 0){
 			if(tree.getLeft() != null){
@@ -61,10 +79,25 @@ public class BST<T extends Comparable<T>>{
 			 }
 		 }
 		
+
+		 
 	
 		return tree;
 	}
 	
+	public String getElements(){
+		for(String x : insertionOrder){
+			
+			if(elements == null){
+				
+				elements =	x+"\n";
+				}else{
+					elements +=	x+"\n";
+				}
+		
+		}
+		return elements;
+	}
 	
 	public int treeHeight(Node<T> tree){
 
@@ -82,12 +115,16 @@ public class BST<T extends Comparable<T>>{
 		}
 
 	
-	
+	@Override
 	public boolean remove(String data) throws EmptyBSTException {
 		// TODO Auto-generated method stub
+		
+		elements = null;
 		if (!isEmpty()) {
 			try {
+				found = false;
 				root = recRemove(data, this.root);
+			
 			} catch (DataNotFoundException  e) {
 				// TODO Auto-generated catch block
 
@@ -95,36 +132,41 @@ public class BST<T extends Comparable<T>>{
 		} else {
 			throw new EmptyBSTException("BST is empty!");
 		}
-
+		
 		length -= 1;
 		return found;
 	}
-
+	
+	
+	
 	private Node<T> recRemove(String data, Node<T> tree) throws EmptyBSTException, DataNotFoundException {
-
-		if (tree == null) {
+		
+		if (tree == null) { 
 			return null;
 		}
 		
 		Pessoa currentPessoa = (Pessoa)tree.getData();
 		
 			if(data.equalsIgnoreCase(currentPessoa.getNome())){
-		
+				
+				insertionOrder.remove(currentPessoa.getNome()+";"+currentPessoa.getTelefone());
 				found = true;
 				tree = removeNode(tree);
 				return tree;
 				
-			}else if(tree.getLeft() != null){
+			}  
 			
+			 
+			 if(tree.getLeft() != null){
 				 tree.setLeft(recRemove(data, tree.getLeft()));
-				
 			}
 			
-			else if(tree.getRight() != null){
-		
-				tree.setRight(recRemove(data, tree.getRight()));
-				
+			 if(tree.getRight() != null){
+				tree.setRight(recRemove(data, tree.getRight()));	
 			}
+			 
+			
+			
 			return tree;
 
 	}
@@ -164,7 +206,7 @@ System.out.println(root.getData().toString());
 	*/
 
 	//Search mode DSF	
-	
+	@Override
 	public String containsDFS(String data){
 		
 		return recContainsDFS(data, this.root);
@@ -188,12 +230,13 @@ System.out.println(root.getData().toString());
 		
 				return currentPessoa.getNome()+" "+currentPessoa.getTelefone();
 				
-			}else if(tempNode.getLeft() != null){
+			} 
+			   if(tempNode.getLeft() != null){
 			
 				stack.push(tempNode.getLeft() );
 			}
 			
-			else if(tempNode.getRight() != null){
+			   if(tempNode.getRight() != null){
 		
 				stack.push(tempNode.getRight());
 			}
@@ -241,8 +284,9 @@ System.out.println(root.getData().toString());
 	
 */
 	
-//Search mode BSF	
-	public String containsBSF(String data){
+//Search mode BSF
+	@Override
+	public String containsBFS(String data){
 		return recContainsBFS(data, this.root);
 	}
 	
@@ -251,10 +295,7 @@ System.out.println(root.getData().toString());
 	    return null;
 	    }
 	  
-	  
-	  System.out.println(data);
-	  System.out.println(root.getData());
-	  
+	 
 	  Queue<Node<T>> q = new LinkedList<>();
 	  Node<T> tempNode;
 	  q.add(root);
@@ -279,29 +320,31 @@ System.out.println(root.getData().toString());
 	  return null;
 	}
 
-	
+	@Override
 	public int getSize(){
 		return length;
 	}
+	@Override
 	public int getTreeHeight(){
 		return treeHeight;
 	}
 	
-	
+	@Override
 	public int getComparisonsDFS(){
 		return comparisonsCounterDFS;
 	}
+	@Override
 	public int getComparisonsBFS(){
 		return comparisonsCounterBFS;
 	}
-	
+	@Override
 	public boolean isEmpty(){
 		return (root == null);
 	}
 	
 	
 	String bstList = "";
-
+	@Override
 	public String infixa(){
 		 bstList = "";
 		 return infixa(this.root);
@@ -319,7 +362,7 @@ System.out.println(root.getData().toString());
 		return bstList;
 	}
 	
-
+	@Override
 	public String prefixa(){
 		 bstList = "";
 		 return prefixa(this.root);
@@ -342,7 +385,7 @@ System.out.println(root.getData().toString());
 		return toReturn;
 	}
 	
-
+	@Override
 	public String posfixa(){
 		 bstList = "";
 		 return posfixa(this.root);
