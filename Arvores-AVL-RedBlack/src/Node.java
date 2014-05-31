@@ -1,4 +1,4 @@
-/**Trabalho das arvore AVL e RBT
+/**Trabalho das arvores AVL e RBT
  * 
  * @author Dennis Kaffer
 
