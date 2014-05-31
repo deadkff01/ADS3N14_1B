@@ -1,58 +1,44 @@
-import java.util.ArrayList;
+/**Trabalho das arvore AVL e RBT
+ * 
+ * @author Dennis Kaffer
 
-public class AvlTree<T extends Comparable<T>> {
+ * @version 1.0
+
+ */
+public class AvlTree<T extends Comparable<T>> 
+extends BsTree<T> {
 	 
-	 protected Node<T> root; 
-	 public int countSingleRotations;
-	 public int countDoubleRotations;
-
+	
+	
+	 public int countRotations;
+	 public int countRotationsInsertRemove;
+	 public int countComparisonsRemove;
+	 public int avlTreeHeight;
 	 
 	 public AvlTree(){
+		 //root inheritance variable...
 		 root = null;
-		 countSingleRotations = 0;
-		 countDoubleRotations = 0;
+		 countRotations = 0;
+		
 	 }
 	 
 	 public void addAVL(T data) {
 	  // cria um novo node apartir do dado recebido..
-		 Node<T> n = new Node<T>(data);
-	  
-	  recAddAVL(n, this.root);
+		 comparisonsInsert = 0;
+		 countRotationsInsertRemove = 0;
+		 Node<T> n = new Node<T>(data); 
+		 recAdd(n, this.root);//bst inheritance method..
+	  //nodo inserido, agora e checado o balanceamento da arvore
+	  recursiveBalance(n);
+	 
+	  avlTreeHeight = treeHeight(this.root);
 	 }
 	 
-
-	 public void recAddAVL(Node<T> newNode, Node<T> tree) {
-
-	  if(tree == null) {
-	   this.root = newNode;
-	  } else {
-	   
-		  //Se o novo nodo for menor, inseri a esquerda 
-	   if(newNode.data.compareTo(tree.data)<=0) {
-	    if(tree.left == null) {
-	    	tree.left = newNode;
-	    	newNode.parent = tree;
-	   
-	     //nodo inserido, agora e checado o balanceamento da arvore
-	     recursiveBalance(tree);
-	    } else {
-	    	recAddAVL(newNode, tree.left);
-	    }
-	    
-	   } else if(newNode.data.compareTo(tree.data)>0) {
-	    if(tree.right == null) {
-	    	tree.right = newNode;
-	    	newNode.parent = tree;
-	     
-	     //nodo inserido, agora e checado o balanceamento da arvore
-	     recursiveBalance(tree);
-	    } else {
-	    	recAddAVL(newNode, tree.right);
-	    }
-	   }
-	  }
-	 }
-	 
+	 /**
+	  * Checa o balanco para cada vez que metodos recursivos que fazem alteracoes nos nodes, esse metodo 
+	  * e necessario para equilibrar a arvore AVL ate que o node raiz seja alcancado..
+	  * @param cur e o node que sera verificado
+	  */
 
 	 public void recursiveBalance(Node<T> cur) {
 
@@ -64,14 +50,22 @@ public class AvlTree<T extends Comparable<T>> {
 	   
 	   if(height(cur.left.left) >= height(cur.left.right)) {
 	    cur = rotateRight(cur);
+	    countRotations++;
+	    countRotationsInsertRemove++;
 	   } else {
 	    cur = doubleRotateLeftRight(cur);
+	    countRotations+=2;
+	    countRotationsInsertRemove+=2;
 	   }
 	  } else if(balance == 2) {
 	   if(height(cur.right.right) >= height(cur.right.left)) {
 	    cur = rotateLeft(cur);
+	    countRotations++;
+	    countRotationsInsertRemove++;
 	   } else {
 	    cur = doubleRotateRightLeft(cur);
+	    countRotations+=2;
+	    countRotationsInsertRemove+=2;
 	   }
 	  }
 	  
@@ -86,29 +80,43 @@ public class AvlTree<T extends Comparable<T>> {
 
 	 
 
-	 public void remove(T data) {
+	 public void removeAVL(T data) {
 		 //Primeiro e preciso encontar o node, depois e possivel deleta-lo..
-	  removeAVL(data, this.root);
+		 countComparisonsRemove = 0;
+		 countRotationsInsertRemove = 0;
+		 recRemoveAVL(data, this.root);
 	 }
 	 
-
-	 public void removeAVL(T data, Node<T> tree) {
+	 /**
+	  * Encontra o node e passa uma instancia para o metodo removeFoundNode
+	  * remover fisicamente o node.
+	  * @param data a data conteudo do node.
+	  * @param tree O node no qual e comecada a busca.
+	  */
+	 public void recRemoveAVL(T data, Node<T> tree) {
 	  if(tree == null) {
 	   //O valor nao existe na arvore
 	   return;
 	  } else {
 	   if(tree.data.compareTo(data) > 0)  {
-	    removeAVL(data, tree.left);
+		   countComparisonsRemove++;
+		   recRemoveAVL(data, tree.left);
 	   } else if(tree.data.compareTo(data) < 0) {
-	    removeAVL(data, tree.right);
+		   countComparisonsRemove++;
+		   recRemoveAVL(data, tree.right);
 	   } else if(tree.data.compareTo(data) == 0) {
+		   countComparisonsRemove++;
 	    //O node foi encontrado, aqui e executado o metodo pra remover
 	    removeFoundNode(tree);
 	   }
 	  }
 	 }
 	 
-
+	 /**
+	  * Remove o node da AVL, enquando o balanceamento da mesma e feito se necessario.
+	  * 
+	  * @param branch O node que vai ser removido.
+	  */
 	 public void removeFoundNode(Node<T> branch) {
 		 Node<T> temp1;
 	  //Pelo menos um ramo de q sera removido diretamente
@@ -122,7 +130,7 @@ public class AvlTree<T extends Comparable<T>> {
 	   }
 	   temp1 = branch;
 	  } else {
-	   // q tem dois ramos(filhos)--> quer sera substituido elo sucessor
+	   // branch tem dois ramos(filhos)--> quer sera substituido pelo sucessor
 		  temp1 = successor(branch);
 	   branch.data = temp1.data;
 	  }
@@ -151,7 +159,13 @@ public class AvlTree<T extends Comparable<T>> {
 	  }
 	  temp1 = null;
 	 }
-	 
+	 /**
+	  * Rotacao para esquerda usando o node adquirido pela instancia
+
+	  * @param n O node para rotacao.
+	  * 
+	  * @return A raiz da arvore apos a rotacao.
+	  */
 
 	 public Node<T> rotateLeft(Node<T> n) {
 	  
@@ -177,11 +191,17 @@ public class AvlTree<T extends Comparable<T>> {
 	  
 	  setBalance(n);
 	  setBalance(temp);
-	  
+	 
 	  return temp;
 	 }
 	 
+	 /**
+	  * Rotacao para direita usando o node adquirido pela instancia
 
+	  * @param n O node para rotacao.
+	  * 
+	  * @return A raiz da arvore apos a rotacao.
+	  */
 	 public Node<T> rotateRight(Node<T> n) {
 	  
 		 Node<T> temp = n.left;
@@ -206,22 +226,36 @@ public class AvlTree<T extends Comparable<T>> {
 	  
 	  setBalance(n);
 	  setBalance(temp);
-	  
+	 
 	  return temp;
 	 }
-
+	 
+	 /** 
+	  * @param u O node para rotacao
+	  * @return O node depois de deus rotacoes
+	  */
 	 public Node<T> doubleRotateLeftRight(Node<T> u) {
 	  u.left = rotateLeft(u.left);
+	  
 	  return rotateRight(u);
 	 }
-	 
-
+	 /** 
+	  * @param u O node para rotacao
+	  * @return O node depois de deus rotacoes
+	  */
 	 public Node<T> doubleRotateRightLeft(Node<T> u) {
 	  u.right = rotateRight(u.right);
+
 	  return rotateLeft(u);
 	 }
 	 
-
+	 /**
+	  * Retorna o sucessor de um determinado node da arvore passado na instancia
+	  * (pesquisa recursiva).
+	  * 
+	  * @param q The predecessor.
+	  * @return The successor of node q.
+	  */
 	 public Node<T> successor(Node<T> q) {
 	  if(q.right != null) {
 		  Node<T> r = q.right;
@@ -238,7 +272,12 @@ public class AvlTree<T extends Comparable<T>> {
 	   return p;
 	  }
 	 }
-	 
+	 /**
+	  * Calcula a "altura" do node
+	  * 
+	  * @param cur
+	  * @return A altura do node (-1, se ele nao existe ou for NULL).
+	  */
 	
 	 private int height(Node<T> cur) {
 		 //balance factor
@@ -256,7 +295,9 @@ public class AvlTree<T extends Comparable<T>> {
 	  }
 	 }
 	 
-	
+	 /**
+	  * Retorna o valor maximo entre dois inteiros
+	  */
 	 private int maximum(int a, int b) {
 	  if(a >= b) {
 	   return a;
@@ -270,20 +311,4 @@ public class AvlTree<T extends Comparable<T>> {
 	  cur.balance = height(cur.right) - height(cur.left);
 	 }
 	 
-
-	 final protected ArrayList<T> infixa() {
-	  ArrayList<T> ret = new ArrayList<T>();
-	  infixa(root, ret);
-	  return ret;
-	 }
-	 
-     protected void infixa(Node<T> n, ArrayList<T> io) {
-	  if (n == null) {
-	   return;
-	  }
-	  infixa(n.left, io);
-	  io.add(n.data);
-	  infixa(n.right, io);
-	 }
-	
 }

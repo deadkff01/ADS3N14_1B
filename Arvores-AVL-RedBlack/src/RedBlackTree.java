@@ -1,76 +1,57 @@
-import java.util.ArrayList;
+/**Trabalho das arvore AVL e RBT
+ * 
+ * @author Dennis Kaffer
 
-public class RedBlackTree<T extends Comparable<T>> {  
+ * @version 1.0
+
+ */
+public class RedBlackTree<T extends Comparable<T>>
+extends BsTree<T> {  
 	
-	Node<T> root; 
 
    static final int BLACK = 1;
    static final int RED = 0;
    private static final int NEGATIVE_RED = -1;
    private static final int DOUBLE_BLACK = 2;
 
-     public int countSingleRotations;
-	 public int countDoubleRotations;
-   
+    public int countRotations;
+    public int countComparisonsRemove;
+    public int countRotationsInsertRemove;
+	public int rbTreeHeight;
+	
    public RedBlackTree(){  
       root = null;
-      countSingleRotations = 0;
-      countDoubleRotations = 0;
+      countRotations = 0;     
    }
-   
-   
-
+ 
    public void addRBT(T data) {  
+	   
+	   comparisonsInsert = 0;
+	   countRotationsInsertRemove=0;
 	   Node<T> newNode = new Node<T>(data);
-      
-	   recAddRBT(newNode, this.root); 
+	   recAdd(newNode, this.root); 
     
       fixAfterAdd(newNode);
+      rbTreeHeight = treeHeight(this.root);
    }
 
-   
-   public void recAddRBT(Node<T> newNode, Node<T> tree){  
-	   if (tree == null) { 
-	    	  this.root = newNode;
-	    	  }
-	   else{
-      if (newNode.data.compareTo(tree.data)< 0)
-      {  
-         if (tree.left == null) 
-         {
-        	 tree.left = newNode;
-        	 newNode.parent = tree;
-         }
-         else { 
-        	 recAddRBT(newNode, tree.left); 
-        	 }
-      }
-      else if (newNode.data.compareTo(tree.data) > 0)
-      {  
-         if (tree.right == null) 
-         {
-            tree.right = newNode;
-            newNode.parent = tree;
-         }
-         else { 
-        	 recAddRBT(newNode, tree.right); }
-      }
-	   }
-   }
 
-   public void remove(T data){
+   public void removeRBT(T data){
       //Encontra o nodo para remove-lo
-
+	   countComparisonsRemove = 0;
+	   countRotationsInsertRemove = 0;
 	   Node<T> toBeRemoved = root;
       boolean found = false;
       while (!found && toBeRemoved != null)
       {
       
          if (toBeRemoved.data.compareTo(data) == 0) { 
+        	 countComparisonsRemove++;
         	 found = true; 
         	 }
          else {
             if (toBeRemoved.data.compareTo(data) > 0) { 
+            	countComparisonsRemove++;
             	toBeRemoved = toBeRemoved.left; 
             	}
             else { 
@@ -128,7 +109,10 @@ public class RedBlackTree<T extends Comparable<T>> {
       smallest.replaceWith(smallest.right);
    }
    
-
+   /**
+   Restaura a arvore depois que e adicionado um novo node
+   @param newNode e um novo node que foi adicionado
+*/
    private void fixAfterAdd(Node<T> newNode){
       if (newNode.parent == null) 
       { 
@@ -138,11 +122,15 @@ public class RedBlackTree<T extends Comparable<T>> {
          newNode.color = RED;
          if (newNode.parent.color == RED) { 
         	 fixDoubleRed(newNode); 
+        	 
         	 }
       }
+      
    }
 
-
+   /** Corrige a arvore apos um node ser removido	
+    *@param O node tem que ter sido removido
+ */
    private void fixBeforeRemove(Node<T> removed) {
       if (removed.color == RED) { return; }
 
@@ -161,7 +149,12 @@ public class RedBlackTree<T extends Comparable<T>> {
     	  }
    }
    
-
+   
+   
+   /**
+    * Move 2 filhos de um pai
+    *@param pai um node com 2 filhos, se for null nada acontece
+  */
    private void bubbleUp(Node<T> parent) {
       if (parent == null) { 
     	  return; 
@@ -210,14 +203,21 @@ public class RedBlackTree<T extends Comparable<T>> {
       }
    }
    
-   
+   /**
+   Corrige a violacao de dois vermelhos
+   @param filho com um dos pais vermelhos
+*/
 
    private void fixDoubleRed(Node<T> child){
 	   Node<T> parent = child.parent;      
 	   Node<T> grandParent = parent.parent;
-      
+	   countRotations++;
+	   countRotationsInsertRemove++;
 	   if (grandParent == null) { 
-		   parent.color = BLACK; return; 
+		   parent.color = BLACK;
+		   
+		   return; 
+		   
 		   }
       
       Node<T> n1, n2, n3, t1, t2, t3, t4;
@@ -228,11 +228,14 @@ public class RedBlackTree<T extends Comparable<T>> {
          {
             n1 = child; n2 = parent;
             t1 = child.left; t2 = child.right; t3 = parent.right;
+           
          }
          else {
             n1 = parent; n2 = child;
             t1 = parent.left; t2 = child.left; t3 = child.right; 
+           
          }
+        
       }
       else{
          n1 = grandParent; t1 = grandParent.left;
@@ -241,20 +244,25 @@ public class RedBlackTree<T extends Comparable<T>> {
          {
             n2 = child; n3 = parent;
             t2 = child.left; t3 = child.right; t4 = parent.right;
+          
          }
          else
          {
             n2 = parent; n3 = child;
-            t2 = parent.left; t3 = child.left; t4 = child.right; 
-         }         
+            t2 = parent.left; t3 = child.left; t4 = child.right;
+            
+         }
+      
       }
       
       if (grandParent == root){
          root = n2;
          n2.parent = null;
+        
       }
       else{
          grandParent.replaceWith(n2);
+        
       }
       
       n1.setLeftChild(t1);
@@ -269,17 +277,26 @@ public class RedBlackTree<T extends Comparable<T>> {
 
       if (n2 == root){
          root.color = BLACK;
+         
       }
       else if (n2.color == RED && n2.parent.color == RED){
          fixDoubleRed(n2);
+        
       }
+      
    }
    
-
+   /**Corrige a violacao de vermelho negativo
+ 
+   @param negRed o node vermelho negativo
+*/
    private void fixNegativeRed(Node<T> negRed) {	
 	   Node<T> n1, n2, n3, n4, t1, t2, t3, child;
 	   Node<T> parent = negRed.parent;
-      if (parent.left == negRed)
+      
+	   countRotations++;
+	   countRotationsInsertRemove++;
+	   if (parent.left == negRed)
       {
          n1 = negRed.left;
          n2 = negRed;
@@ -324,28 +341,14 @@ public class RedBlackTree<T extends Comparable<T>> {
 	   
       if (child.left != null && child.left.color == RED) { 
          fixDoubleRed(child.left); 
+         
          return; 
       }
       if (child.right != null && child.right.color == RED) { 
          fixDoubleRed(child.right);  
+             
       }
+      
    }
   
-   final protected ArrayList<T> infixa() {
-		  ArrayList<T> ret = new ArrayList<T>();
-		  infixa(root, ret);
-		  return ret;
-		 }
-
-   protected void infixa(Node<T> n, ArrayList<T> io) {
-		  if (n == null) 
-		  {
-		   return;
-		  }
-		  infixa(n.left, io);
-		  io.add(n.data);
-		  infixa(n.right, io);
-		 }
-		
-   
 }
