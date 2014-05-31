@@ -167,7 +167,7 @@ public class AppMain {
 	String readCmd;
 	while(!endProgram){
 		
-		System.out.println("Comandos: Testar AVL, Testar RBT");
+		System.out.println("Comandos: Testar AVL, Testar RBT ou sair");
 		readCmd = sc.nextLine();
 		
 		if(readCmd.equalsIgnoreCase("testar avl")){
@@ -264,7 +264,6 @@ public class AppMain {
 				
 				System.out.println("-REDBLACK- ");
 			    System.out.println("PRINT RBT INFIXA:  "+rb.infixa());
-				//avl.removeAVL(4);
 			    System.out.println("PRINT RBT PREFIXA: "+rb.prefixa());
 			    System.out.println("PRINT RBT POSFIXA: "+rb.posfixa());
 			}
@@ -272,9 +271,10 @@ public class AppMain {
 		    }
 			
 			}
-	if(readCmd.equalsIgnoreCase("sair"))
+	if(readCmd.equalsIgnoreCase("sair")){
 		endProgram = true;
-	break;
+		  System.out.println("Programa encerrado!");
+	}
 		
 	
 		}
